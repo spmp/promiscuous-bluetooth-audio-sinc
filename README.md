@@ -6,9 +6,6 @@ This project assumes the use of PulseAudio and should be tested with PortAudio i
 
 This project is heavily based on the Gist and comments at https://gist.github.com/mill1000/74c7473ee3b4a5b13f6325e9994ff84c#gistcomment-4032842
 
-## Caveats and roadmap
-
-At this stage the Bluetooth device is hard coded, so please check that it matches your device. In the future such options should be set by a configuration file...
 
 ## Installation
 
@@ -23,26 +20,6 @@ Ensure that the required Bluetooth, Bluetooth audio, and Python 3 dependencies a
 ```bash
 sudo apt install pulseaudio-module-bluetooth bluez
 ```
-
-### Ensure Bluetooth is always discoverable
-
-If you are using a desktop version of your OS, ensure that Bluetooth is set to visible.
-
-Alternatively you can set the `DiscoverableTimeout` and `PairableTimeout` in `/etc/bluetooth/main.conf` to `0`
-
-```
-# How long to stay in discoverable mode before going back to non-discoverable
-# The value is in seconds. Default is 180, i.e. 3 minutes.
-# 0 = disable timer, i.e. stay discoverable forever
-DiscoverableTimeout = 0
-
-# How long to stay in pairable mode before going back to non-discoverable
-# The value is in seconds. Default is 0.
-# 0 = disable timer, i.e. stay pairable forever
-PairableTimeout = 0
-```
-
-**NOTE:** The above steps were not required for me.
 
 ### Install the A2DP Bluetooth agent
 
@@ -118,6 +95,18 @@ You can follow the logs of the agent with:
 journalctl -fu bt-agent-a2dp.service
 ```
 
-### Higher quality audio
+## Configuring the Bluetooth adapter
+By default `hci0` is set to discoverable and pariable.
+In the case where there are multiple Bluetooth adapters, one or more adapters can be set to discoverable and pairable in the configuration file `/etc/default/a2dp-agent` as a comma separated list of devices as:
+
+```bash
+BLUETOOTH_ADAPTER=hci1
+```
+or
+```bash
+BLUETOOTH_ADAPTER=hci0,hci1
+```
+
+## Higher quality audio
 
 SBC has a bad reputation compared with other codes, but it turns out that good old SBC has a _dual channel_ mode which can be enabled in the _Developer options_ in recent LineageOS based Android phones.  See [Bluetooth SBC Dual Channel HD audio mode – LineageOS – LineageOS Android Distribution](https://lineageos.org/engineering/Bluetooth-SBC-XQ/) for a breakdown.

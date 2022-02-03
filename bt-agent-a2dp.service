@@ -4,12 +4,14 @@ After=bluetooth.service
 Wants=bluetooth.service
 
 [Service]
-# For hc1 etc set in the optional env var file as:
+# To set devices other than just hci0 to discoverable and pairable
+#  specify a comma separated list of devices in the env file as:
 #BLUETOOTH_ADAPTER=hci1
+# or 
+#BLUETOOTH_ADAPTER=hci0,hci1
 EnvironmentFile=-/etc/default/a2dp-agent
 ExecStart=/usr/bin/python3 -u /usr/local/bin/a2dp-agent
 SyslogIdentifier=A2DP-Agent
 
 [Install]
 WantedBy=bluetooth.service
-

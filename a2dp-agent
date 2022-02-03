@@ -21,14 +21,10 @@ DEVICE_DEFAULT = 'hci0'
 AGENT_INTERFACE = 'org.bluez.Agent1'
 AGENT_PATH = "/org/bluez/promiscuousAgent"
 
-
-'''simple-agent'''
-
 def set_trusted(path):
     props = dbus.Interface(bus.get_object("org.bluez", path),
                     "org.freedesktop.DBus.Properties")
     props.Set("org.bluez.Device1", "Trusted", True)
-
 
 class Rejected(dbus.DBusException):
     _dbus_error_name = "org.bluez.Error.Rejected"
@@ -95,16 +91,19 @@ if __name__ == '__main__':
     obj = bus.get_object("org.bluez", "/org/bluez")
     
     # Get the device from ENV_VAR if set
-    DEVICE_PATH = (DEVICE_PATH_BASE + 
-      os.getenv(DEVICE_ENV_VAR, DEVICE_DEFAULT))
+    adapters=os.getenv(DEVICE_ENV_VAR, DEVICE_DEFAULT).split(",")
     
-    # Set Discoverable and Pairable to always on
-    print(f"Setting {DEVICE_PATH} to 'discoverable' and 'pairable'...")
-    prop = dbus.Interface(bus.get_object("org.bluez", DEVICE_PATH), "org.freedesktop.DBus.Properties")
-    prop.Set("org.bluez.Adapter1", "DiscoverableTimeout", dbus.UInt32(0))
-    prop.Set("org.bluez.Adapter1", "PairableTimeout", dbus.UInt32(0))
-    prop.Set("org.bluez.Adapter1", "Discoverable", dbus.Boolean(True))
-    prop.Set("org.bluez.Adapter1", "Pairable", dbus.Boolean(True))
+    for adapter in adapters:
+      
+      adapterPath = DEVICE_PATH_BASE + adapter
+    
+      # Set Discoverable and Pairable to always on
+      print(f"Setting {adapterPath} to 'discoverable' and 'pairable'...")
+      prop = dbus.Interface(bus.get_object("org.bluez", adapterPath), "org.freedesktop.DBus.Properties")
+      prop.Set("org.bluez.Adapter1", "DiscoverableTimeout", dbus.UInt32(0))
+      prop.Set("org.bluez.Adapter1", "PairableTimeout", dbus.UInt32(0))
+      prop.Set("org.bluez.Adapter1", "Discoverable", dbus.Boolean(True))
+      prop.Set("org.bluez.Adapter1", "Pairable", dbus.Boolean(True))
 
     # Create the agent manager
     manager = dbus.Interface(obj, "org.bluez.AgentManager1")
