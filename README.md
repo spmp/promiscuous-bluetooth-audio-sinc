@@ -6,6 +6,12 @@ This project assumes the use of PulseAudio and should be tested with PortAudio i
 
 This project is heavily based on the Gist and comments at https://gist.github.com/mill1000/74c7473ee3b4a5b13f6325e9994ff84c#gistcomment-4032842
 
+## Authenticating
+This agent essentially allows for non-interactive pairing with some caveats.
+
+When a pairing client requests a _pairing code_, simply accept the code.
+
+When a pairing client requests a pin code set as `0000`.
 
 ## Installation
 
