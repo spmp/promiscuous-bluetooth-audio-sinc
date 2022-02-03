@@ -4,6 +4,9 @@ After=bluetooth.service
 Wants=bluetooth.service
 
 [Service]
+# For hc1 etc set in the optional env var file as:
+#BLUETOOTH_ADAPTER=hci1
+EnvironmentFile=-/etc/default/a2dp-agent
 ExecStart=/usr/bin/python3 -u /usr/local/bin/a2dp-agent
 SyslogIdentifier=A2DP-Agent
 
