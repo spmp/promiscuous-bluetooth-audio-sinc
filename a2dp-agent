@@ -47,7 +47,7 @@ class Agent(dbus.service.Object):
                     in_signature="os", out_signature="")
     def AuthorizeService(self, device, uuid):
         print(f"AuthorizeService ({device}, {uuid})")
-        if uuid == "0000110d-0000-1000-8000-00805f9b34fb":
+        if uuid == "0000110B-0000-1000-8000-00805F9B34FB":
             print("Authorized A2DP Service")
             return
         print("Rejecting non-A2DP Service")
