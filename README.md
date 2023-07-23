@@ -2,7 +2,7 @@
 
 A2DP agent for promiscuous/permissive audio sinc for Linux. Once installed, a Bluetooth client, such as a smart phone, should be able to discover, pair, and subsequently play audio without any manual interaction. This is perfect for those with headless media boxes wanting to expand their connective options and saves explaining things to the kids 8) 
 
-This project assumes the use of PulseAudio and should be tested with PortAudio if required.
+This project assumes the use of PulseAudio or Pipewire via `pipewire-pulse`.
 
 This project is heavily based on the Gist and comments at https://gist.github.com/mill1000/74c7473ee3b4a5b13f6325e9994ff84c#gistcomment-4032842
 
@@ -24,7 +24,7 @@ This documentation is based on my experience using Ubuntu 21.04.
 Ensure that the required Bluetooth, Bluetooth audio, and Python 3 dependencies are installed.
 
 ```bash
-sudo apt install pulseaudio-module-bluetooth bluez
+sudo apt install pulseaudio-module-bluetooth bluez python3-dbus
 ```
 
 ### Install the A2DP Bluetooth agent
