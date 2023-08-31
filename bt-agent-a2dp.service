@@ -4,14 +4,24 @@ After=bluetooth.service
 Wants=bluetooth.service
 
 [Service]
-# To set devices other than just hci0 to discoverable and pairable
+# Runs the `a2db-agent` as the `pipewire` user in the `bluetooth` group.
+# If on a purely PulseAudio system use as:
+#User=pulse
+# If you comment or remove the following lines, then the `a2db-agent`
+# runs as 'root' which is likely undesirable.
+User=pipewire
+Group=bluetooth
+
+# OPTINAL: To set devices other than just hci0 to discoverable and pairable
 #  specify a comma separated list of devices in the env file as:
 #BLUETOOTH_ADAPTER=hci1
 # or 
 #BLUETOOTH_ADAPTER=hci0,hci1
+
 EnvironmentFile=-/etc/default/a2dp-agent
 ExecStart=/usr/bin/python3 -u /usr/local/bin/a2dp-agent
 SyslogIdentifier=A2DP-Agent
 
 [Install]
 WantedBy=bluetooth.service
+

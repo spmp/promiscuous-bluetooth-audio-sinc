@@ -72,7 +72,10 @@ Play some audio on the client device, you should hear or see something happening
 ## Install the A2DP Bluetooth Agent as a service
 
 To make the A2DP Bluetooth Agent run on boot copy the included file **bt-agent-a2dp.service** to `/etc/systemd/system`.
-Now run the following command to enable the A2DP Agent service
+Now run the following command to enable the A2DP Agent service.
+**NOTE:** By default the the startup service runs the `a2dp-agent` as the `pipewire` user and the `bluetooth` group.
+You can remove this to run as root, or better, fix your permissions 8)
+If you are on a PulseAudio system, you will need to se the `User=...` to `pulse`.
 
 ```
 sudo cp -a bt-agent-a2dp.service /etc/systemd/system/
